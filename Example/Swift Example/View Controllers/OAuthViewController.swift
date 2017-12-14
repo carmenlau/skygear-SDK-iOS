@@ -33,8 +33,6 @@ class OAuthViewController: UITableViewController {
     let linkProviderIndex = 1
     let loginProviderWithAccessTokenIndex = 2
     let linkProviderWithAccessTokenIndex = 3
-    let loginProviderWithAccessTokenAlertTag = 0
-    let linkProviderWithAccessTokenAlertTag = 1
     let selectedProvider = "google"
     let dateFormatter = DateFormatter()
 
