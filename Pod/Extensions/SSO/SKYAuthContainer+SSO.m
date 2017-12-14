@@ -88,6 +88,17 @@ typedef enum : NSInteger { SKYOAuthActionLogin, SKYOAuthActionLink } SKYOAuthAct
           }];
 }
 
+- (void)unlinkOAuthProvider:(NSString *)providerID
+          completionHandler:(void (^)(NSError *))completionHandler
+{
+    [self.container callLambda:[self sso_unlinkURLWithProvider:providerID]
+             completionHandler:^(NSDictionary *result, NSError *error) {
+                 if (completionHandler) {
+                     completionHandler(error);
+                 }
+             }];
+}
+
 - (void)sso_oauthFlowWithProvider:(NSString *)providerID
                           options:(NSDictionary *)options
                            action:(SKYOAuthActionType)action
@@ -167,6 +178,11 @@ typedef enum : NSInteger { SKYOAuthActionLogin, SKYOAuthActionLink } SKYOAuthAct
         default:
             return nil;
     }
+}
+
+- (NSString *)sso_unlinkURLWithProvider:(NSString *)provider
+{
+    return [NSString stringWithFormat:@"sso/%@/unlink", provider];
 }
 
 - (NSError *)sso_validateGetAuthURLParams:(NSDictionary *)params

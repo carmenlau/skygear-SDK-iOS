@@ -57,6 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
               accessToken:(NSString *)accessToken
         completionHandler:(void (^_Nullable)(NSError *_Nullable))completionHandler;
 
+/**
+ Unlink given provider.
+ */
+- (void)unlinkOAuthProvider:(NSString *)providerID
+          completionHandler:(void (^_Nullable)(NSError *_Nullable))completionHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END
