@@ -46,15 +46,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Login user with given provider by access token.
  */
-- (void)loginOAuthProvider:(NSString *_Nonnull)providerID
-               accessToken:(NSString *_Nonnull)accessToken
+- (void)loginOAuthProvider:(NSString *)providerID
+               accessToken:(NSString *)accessToken
          completionHandler:(SKYContainerUserOperationActionCompletion _Nullable)completionHandler;
 
 /**
  Link user with given provider by access token.
  */
-- (void)linkOAuthProvider:(NSString *_Nonnull)providerID
-              accessToken:(NSString *_Nonnull)accessToken
+- (void)linkOAuthProvider:(NSString *)providerID
+              accessToken:(NSString *)accessToken
         completionHandler:(void (^_Nullable)(NSError *_Nullable))completionHandler;
 
 @end

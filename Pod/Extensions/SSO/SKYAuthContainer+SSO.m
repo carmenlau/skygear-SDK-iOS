@@ -59,9 +59,9 @@ typedef enum : NSInteger { SKYOAuthActionLogin, SKYOAuthActionLink } SKYOAuthAct
     return [[SKYWebOAuth shared] resumeAuthorizationFlowWithURL:url];
 }
 
-- (void)loginOAuthProvider:(NSString *_Nonnull)providerID
-               accessToken:(NSString *_Nonnull)accessToken
-         completionHandler:(SKYContainerUserOperationActionCompletion _Nullable)completionHandler
+- (void)loginOAuthProvider:(NSString *)providerID
+               accessToken:(NSString *)accessToken
+         completionHandler:(SKYContainerUserOperationActionCompletion)completionHandler
 {
     __weak typeof(self) weakSelf = self;
     [self.container callLambda:[self sso_authWithAccessTokenURL:SKYOAuthActionLogin
@@ -74,9 +74,9 @@ typedef enum : NSInteger { SKYOAuthActionLogin, SKYOAuthActionLink } SKYOAuthAct
              }];
 }
 
-- (void)linkOAuthProvider:(NSString *_Nonnull)providerID
-              accessToken:(NSString *_Nonnull)accessToken
-        completionHandler:(void (^_Nullable)(NSError *_Nullable))completionHandler
+- (void)linkOAuthProvider:(NSString *)providerID
+              accessToken:(NSString *)accessToken
+        completionHandler:(void (^)(NSError *))completionHandler
 {
     [self.container
                  callLambda:[self sso_authWithAccessTokenURL:SKYOAuthActionLink provider:providerID]
