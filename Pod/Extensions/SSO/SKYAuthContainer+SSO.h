@@ -63,6 +63,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unlinkOAuthProvider:(NSString *)providerID
           completionHandler:(void (^_Nullable)(NSError *_Nullable))completionHandler;
 
+/**
+ Get oauth provider user profiles, the result dictionary key is provider id and value is profile
+ dictionary.
+ */
+- (void)getOAuthProviderProfiles:(NSString *)providerID
+               completionHandler:(void (^_Nullable)(NSDictionary *_Nullable,
+                                                    NSError *_Nullable))completionHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END
