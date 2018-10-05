@@ -88,9 +88,16 @@ NSString *const SKYContainerCurrentUserRecordKey = @"SKYContainerCurrentUserReco
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:appBundleIdentifier];
     keychain.accessibility = UICKeyChainStoreAccessibilityAfterFirstUnlock;
 
-    NSString *accessToken = [keychain stringForKey:SKYContainerAccessTokenKey];
-    NSData *encodedUser = [keychain dataForKey:SKYContainerCurrentUserRecordKey];
-
+    NSError *error;
+    NSString *accessToken = [keychain stringForKey:SKYContainerAccessTokenKey error:&error];
+    if (error) {
+        NSLog(@"Error loading access token: %@",error);
+    }
+    error = nil;
+    NSData *encodedUser = [keychain dataForKey:SKYContainerCurrentUserRecordKey error:&error];
+    if (error) {
+        NSLog(@"Error loading current user: %@",error);
+    }
     SKYRecord *user = nil;
     if ([encodedUser isKindOfClass:[NSData class]]) {
         user = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
@@ -185,12 +192,28 @@ NSString *const SKYContainerCurrentUserRecordKey = @"SKYContainerCurrentUserReco
     keychain.accessibility = UICKeyChainStoreAccessibilityAfterFirstUnlock;
 
     if (_accessToken && _currentUser) {
+        NSError *error;
         [keychain setData:[NSKeyedArchiver archivedDataWithRootObject:_currentUser]
-                   forKey:SKYContainerCurrentUserRecordKey];
-        [keychain setString:_accessToken.tokenString forKey:SKYContainerAccessTokenKey];
+                   forKey:SKYContainerCurrentUserRecordKey error:&error];
+        if (error) {
+            NSLog(@"Error saving current user: %@",error);
+        }
+        error = nil;
+        [keychain setString:_accessToken.tokenString forKey:SKYContainerAccessTokenKey error:&error];
+        if (error) {
+            NSLog(@"Error saving access token: %@",error);
+        }
     } else {
-        [keychain removeItemForKey:SKYContainerAccessTokenKey];
-        [keychain removeItemForKey:SKYContainerCurrentUserRecordKey];
+        NSError *error;
+        [keychain removeItemForKey:SKYContainerAccessTokenKey error:&error];
+        if (error) {
+            NSLog(@"Error removing access token: %@",error);
+        }
+        error = nil;
+        [keychain removeItemForKey:SKYContainerCurrentUserRecordKey error:&error];
+        if (error) {
+            NSLog(@"Error removing current user: %@",error);
+        }
     }
 }
 
